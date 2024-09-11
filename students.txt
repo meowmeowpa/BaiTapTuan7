@@ -1,0 +1,3 @@
+Person{personID='S001', personName='Nguyen Van A', dateOfBirth='01/01/2000'}, Mark Avg: 7.0
+Person{personID='S002', personName='Le Thi B', dateOfBirth='02/02/2001'}, Mark Avg: 7.0
+Person{personID='S003', personName='Tran Van C', dateOfBirth='03/03/2002'}, Mark Avg: 7.0
