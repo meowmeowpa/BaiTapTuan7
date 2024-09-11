@@ -1,6 +1,8 @@
 package BaiOn3;
 
-  public class Student extends  Person {
+import java.io.Serializable;
+
+public class Student extends  Person implements Serializable {
      private double markAvg;
 
       public Student(String personID, String personName, String dateOfBirth, double markAvg) {
@@ -20,4 +22,6 @@ package BaiOn3;
       public String toString() {
           return super.toString() + ", Mark Avg: " + markAvg;
       }
+
+
   }

@@ -21,11 +21,28 @@ public class CRUDStudent {
         return false;
     }
 
-    // Phương thức lưu một sinh viên vào file
-    public boolean addStudentToFile(Student objStudent, String filename) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true))) {
-            writer.write(objStudent.toString());
-            writer.newLine();
+    public boolean addStudentToFile(Student student, String fileName) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
+            oos.writeObject(student);
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+
+    public Student getStudentFromFile(String fileName) {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
+            return (Student) ois.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public boolean addStudentListToFile(Student[] studentList, String fileName) {
+        try (ObjectOutputStream oosList = new ObjectOutputStream(new FileOutputStream(fileName))) {
+            oosList.writeObject(studentList);
             return true;
         } catch (IOException e) {
             e.printStackTrace();
@@ -33,56 +50,13 @@ public class CRUDStudent {
         }
     }
 
-    // Phương thức lấy sinh viên từ file
-    public Student getStudentFromFile(String line) {
-        // Chia dòng thành các phần dựa trên dấu phẩy
-        String[] parts = line.split(",");
-
-        String id = parts[0].trim();       // ID
-        String name = parts[1].trim();     // Tên
-        String dob = parts[2].trim();      // Ngày sinh
-        double markAvg = Double.parseDouble(parts[3].trim()); // Đảm bảo chỉ có số
-
-        return new Student(id, name, dob, markAvg);
-    }
-
-    // Phương thức lưu danh sách sinh viên vào file
-    public boolean addStudentListToFile(Student[] listStudent, String filename) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
-            for (Student student : listStudent) {
-                if (student != null) {
-                    writer.write(student.toString());
-                    writer.newLine();
-                }
-            }
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    // Phương thức lấy danh sách sinh viên từ file
-    public Student[] getAllStudentFromFile(String filename) {
-        Student[] studentList = new Student[100];
-        int count = 0;
-        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                // Parse thông tin sinh viên
-                String[] data = line.split(", ");
-                studentList[count++] = new Student(data[0], data[1], data[2], Double.parseDouble(data[3]));
-            }
-        } catch (IOException e) {
+    public Student[] getStudentListFromFile(String fileName) {
+        try (ObjectInputStream oisList = new ObjectInputStream(new FileInputStream(fileName))) {
+            return (Student[]) oisList.readObject();
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return studentList;
-    }
-
-    public void saveToFile(String file) {
-    }
-
-    public void displayAllStudents() {
+        return null;
     }
 }
 

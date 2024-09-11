@@ -1,6 +1,8 @@
 package BaiOn3;
 
- class Person {
+import java.io.Serializable;
+
+class Person implements Serializable {
      private String personID;
      private String personName;
      private String dateOfBirth;
@@ -43,4 +45,6 @@ package BaiOn3;
                  ", dateOfBirth='" + dateOfBirth + '\'' +
                  '}';
      }
+
+
  }
